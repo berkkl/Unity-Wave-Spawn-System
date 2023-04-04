@@ -33,18 +33,12 @@ public class EnemySpawner : MonoBehaviour
     public List<Wave> waves;
     public Dictionary<string, Queue<GameObject>> PoolDictionary;
 
-    //public List<EntityManager> entityType;
     public List<Transform> spawnPoints;
     public float timeToNextSpawn;
     private float _timerForNextSpawn;
     public int totalEntityCount;
     public int currentWave = 0;
     public int waveCount;
-
-    public float entityHealth;
-    public float entityMovementSpeed;
-    public float entityAttackSpeed;
-    public float entityPower;
 
     public float timeBetweenWaves = 10f;
     public float timeToNextWave;
@@ -95,15 +89,6 @@ public class EnemySpawner : MonoBehaviour
     {
         waveCount = waves.Count;
         currentWave = 0;
-
-        /*for (int i = 0; i < entityType.Count; i++)
-        {
-            entityHealth = entityType[i].GetComponent<EntityManager>().maxHealth;
-            entityMovementSpeed = entityType[i].GetComponent<EntityManager>().movementSpeed;
-            entityAttackSpeed = entityType[i].GetComponent<EntityManager>().attackSpeed;
-            entityPower = entityType[i].GetComponent<EntityManager>().attackDamage;
-        }*/
-
         timeToNextWave = 0f;
         isSpawningWave = false;
     }
