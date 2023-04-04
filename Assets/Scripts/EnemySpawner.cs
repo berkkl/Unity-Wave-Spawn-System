@@ -9,14 +9,14 @@ public class EnemySpawner : MonoBehaviour
     {
         public int waveNumber;
         public List<Pool> pools;
-
+        
         [System.Serializable]
         public class Pool
         {
-            public string tag;
             public GameObject prefab;
             public int size;
         }
+
     }
 
     #region Singleton & Awake
@@ -31,7 +31,7 @@ public class EnemySpawner : MonoBehaviour
     #endregion
 
     public List<Wave> waves;
-    public Dictionary<string, Queue<GameObject>> PoolDictionary;
+    public Dictionary<GameObject, Queue<GameObject>> PoolDictionary;
 
     public List<Transform> spawnPoints;
     public float timeToNextSpawn;
@@ -52,13 +52,13 @@ public class EnemySpawner : MonoBehaviour
 
     private void InitializeObjectPooling()
     {
-        PoolDictionary = new Dictionary<string, Queue<GameObject>>();
+        PoolDictionary = new Dictionary<GameObject, Queue<GameObject>>();
 
         foreach (Wave wave in waves)
         {
             foreach (Wave.Pool pool in wave.pools)
             {
-                if (!PoolDictionary.ContainsKey(pool.tag))
+                if (!PoolDictionary.ContainsKey(pool.prefab))
                 {
                     Queue<GameObject> objectPool = new Queue<GameObject>();
 
@@ -68,11 +68,11 @@ public class EnemySpawner : MonoBehaviour
                         obj.SetActive(false);
                         objectPool.Enqueue(obj);
                     }
-                    PoolDictionary.Add(pool.tag, objectPool);
+                    PoolDictionary.Add(pool.prefab, objectPool);
                 }
                 else
                 {
-                    Queue<GameObject> objectPool = PoolDictionary[pool.tag];
+                    Queue<GameObject> objectPool = PoolDictionary[pool.prefab];
 
                     for (int j = 0; j < pool.size; j++)
                     {
@@ -84,6 +84,7 @@ public class EnemySpawner : MonoBehaviour
             }
         }
     }
+
 
     private void InitializeSpawnManager()
     {
@@ -113,17 +114,17 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    public GameObject SpawnFromPool(string tag, Vector3 position, Quaternion rotation)
+    public GameObject SpawnFromPool(GameObject prefab, Vector3 position, Quaternion rotation)
     {
-        if (!PoolDictionary.ContainsKey(tag))
+        if (!PoolDictionary.ContainsKey(prefab))
         {
-            Debug.LogWarning("Pool with tag " + tag + " does not exist");
+            Debug.LogWarning("Pool with prefab " + prefab.name + " does not exist");
             return null;
         }
 
         GameObject objectToSpawn = null;
 
-        foreach (GameObject obj in PoolDictionary[tag])
+        foreach (GameObject obj in PoolDictionary[prefab])
         {
             if (!obj.activeInHierarchy)
             {
@@ -134,7 +135,7 @@ public class EnemySpawner : MonoBehaviour
 
         if (objectToSpawn == null)
         {
-            Debug.LogWarning("No inactive object found with tag " + tag);
+            Debug.LogWarning("No inactive object found with prefab " + prefab.name);
             return null;
         }
 
@@ -145,6 +146,7 @@ public class EnemySpawner : MonoBehaviour
         return objectToSpawn;
     }
 
+
     private IEnumerator SpawnWave()
     {
         isSpawningWave = true;
@@ -153,9 +155,9 @@ public class EnemySpawner : MonoBehaviour
         {
             int randomNum = Random.Range(0, spawnPoints.Count);
             int randomEntityIndex = Random.Range(0, waves[currentWave].pools.Count);
-            string poolTag = waves[currentWave].pools[randomEntityIndex].tag;
 
-            SpawnFromPool(poolTag, spawnPoints[randomNum].position, Quaternion.identity);
+            SpawnFromPool(waves[currentWave].pools[randomEntityIndex].prefab, spawnPoints[randomNum].position, Quaternion.identity);
+
             waves[currentWave].pools[randomEntityIndex].size -= 1;
 
             if (waves[currentWave].pools[randomEntityIndex].size <= 0)
