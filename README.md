@@ -22,4 +22,4 @@ This is a simple and efficient wave-based enemy spawner system for Unity. It use
 ### Inspector Images
  
 ![image](https://user-images.githubusercontent.com/30018589/229891518-2af0f9a7-2058-4376-b9b2-2963d39a7d4c.png)
-![image](https://user-images.githubusercontent.com/30018589/229886584-466c7804-ea82-4829-8f72-c256e6d9114c.png)
+![image](https://user-images.githubusercontent.com/30018589/229892179-e35332ae-3a93-4000-9b03-e8c93e998fdf.png)
