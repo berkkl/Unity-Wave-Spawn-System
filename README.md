@@ -13,14 +13,13 @@ This is a simple and efficient wave-based enemy spawner system for Unity. It use
 - Create an empty GameObject in your scene and attach the EnemySpawner script to it.
 - Set up your spawn points by creating empty GameObjects and adding them to the spawnPoints list in the EnemySpawner script.
 - Create waves by adding elements to the waves list in the EnemySpawner script. Each wave should have a unique waveNumber and a list of pools for the enemies.
-- For each enemy type, create a Pool in the wave configuration. Set the tag, prefab, and size (number of instances) for the pool.
+- For each enemy type, create a Pool in the wave configuration. Set the prefab, and size (number of instances) for the pool.
 
 ### Notes
-- Make sure to have unique tags for each enemy type.
 - Prefabs should be set up with appropriate enemy scripts and components.
 - Adjust timeToNextSpawn, timeBetweenWaves, and other settings as needed for your game.
 
 ### Inspector Images
  
-![image](https://user-images.githubusercontent.com/30018589/229886525-eae6519b-6a39-4a4d-b366-4b602e0b6b83.png)
+![image](https://user-images.githubusercontent.com/30018589/229891518-2af0f9a7-2058-4376-b9b2-2963d39a7d4c.png)
 ![image](https://user-images.githubusercontent.com/30018589/229886584-466c7804-ea82-4829-8f72-c256e6d9114c.png)
